@@ -1,5 +1,5 @@
 # Alkemy-Challenge
-NodeJs ReactJs
+Node.Js React.Js
 
 # Instalación del package.json antes de comenzar
 
@@ -24,5 +24,3 @@ USER_DB= //Usuario de la base de datos creada
 
 PASSWORD_DB= //Contraseña del usuario de la base de datos crada
 
-# Una vez configurado e instalado todas las dependencias corremos tanto el back como el front con el siguiente único comando que ejecutara ambos simultaneamente
-npm run dev // desde la carpeta back-end
