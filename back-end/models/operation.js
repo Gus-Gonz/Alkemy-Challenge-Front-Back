@@ -18,8 +18,7 @@ const Operation = sequelize.define(
     concept: Sequelize.STRING,
     amount: Sequelize.FLOAT,
     date: Sequelize.DATEONLY,
-    type: Sequelize.STRING,
-    category: Sequelize.STRING,
+    isIncome: Sequelize.BOOLEAN,
   },
   {
     timestamps: false,

@@ -1,11 +1,12 @@
 const HttpError = require("../models/http-errors");
 
 const Operation = require("../models/operation");
+
 const sequelize = require("../util/database");
 
 const getOperations = async (req, res, next) => {
   const operation = await Operation.findAll({
-    attributes: ["id", "concept", "amount", "date", "type", "category"],
+    attributes: ["id", "concept", "amount", "date", "isIncome"],
   });
 
   if (!operation) {
@@ -18,7 +19,7 @@ const getOperations = async (req, res, next) => {
 
 const getLastTenOperations = async (req, res, next) => {
   const operation = await Operation.findAll({
-    attributes: ["id", "concept", "amount", "date", "type", "category"],
+    attributes: ["id", "concept", "amount", "date", "isIncome"],
     order: [["date", "DESC"]],
     limit: 10,
   });
@@ -35,7 +36,7 @@ const getLastTenOperations = async (req, res, next) => {
 const getOperationsByType = async (req, res, next) => {
   const typeParams = req.params.type;
   const operation = await Operation.findAll({
-    attributes: ["concept", "amount", "date", "type", "category"],
+    attributes: ["concept", "amount", "date", "isIncome"],
     where: { type: typeParams },
   });
   if (!operation) {
@@ -47,14 +48,13 @@ const getOperationsByType = async (req, res, next) => {
 };
 
 const createOperation = async (req, res, next) => {
-  const { concept, amount, date, type, category } = req.body;
+  const { concept, amount, date, isIncome } = req.body;
 
   const createdOperation = await Operation.create({
     concept,
     amount,
     date,
-    type,
-    category,
+    isIncome,
   })
     .then((createdOperation) => {
       res.json({
@@ -67,14 +67,13 @@ const createOperation = async (req, res, next) => {
 
 const updateOperation = async (req, res, next) => {
   const operationId = req.params.oid;
-  const { concept, amount, date, category } = req.body;
+  const { concept, amount, date } = req.body;
 
   await Operation.update(
     {
       concept,
       amount,
       date,
-      category,
     },
     { where: { id: operationId } }
   )
