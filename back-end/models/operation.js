@@ -16,7 +16,7 @@ const Operation = sequelize.define(
       primaryKey: true,
     },
     concept: Sequelize.STRING,
-    amount: Sequelize.FLOAT,
+    value: Sequelize.FLOAT,
     date: Sequelize.DATEONLY,
     isIncome: Sequelize.BOOLEAN,
   },

@@ -6,7 +6,7 @@ const sequelize = require("../util/database");
 
 const getOperations = async (req, res, next) => {
   const operation = await Operation.findAll({
-    attributes: ["id", "concept", "amount", "date", "isIncome"],
+    attributes: ["id", "concept", "value", "date", "isIncome"],
   });
 
   if (!operation) {
@@ -19,7 +19,7 @@ const getOperations = async (req, res, next) => {
 
 const getLastTenOperations = async (req, res, next) => {
   const operation = await Operation.findAll({
-    attributes: ["id", "concept", "amount", "date", "isIncome"],
+    attributes: ["id", "concept", "value", "date", "isIncome"],
     order: [["date", "DESC"]],
     limit: 10,
   });
@@ -36,7 +36,7 @@ const getLastTenOperations = async (req, res, next) => {
 const getOperationsByType = async (req, res, next) => {
   const typeParams = req.params.type;
   const operation = await Operation.findAll({
-    attributes: ["concept", "amount", "date", "isIncome"],
+    attributes: ["concept", "value", "date", "isIncome"],
     where: { type: typeParams },
   });
   if (!operation) {
@@ -48,11 +48,11 @@ const getOperationsByType = async (req, res, next) => {
 };
 
 const createOperation = async (req, res, next) => {
-  const { concept, amount, date, isIncome } = req.body;
+  const { concept, value, date, isIncome } = req.body;
 
   const createdOperation = await Operation.create({
     concept,
-    amount,
+    value,
     date,
     isIncome,
   })
@@ -67,12 +67,12 @@ const createOperation = async (req, res, next) => {
 
 const updateOperation = async (req, res, next) => {
   const operationId = req.params.oid;
-  const { concept, amount, date } = req.body;
+  const { concept, value, date } = req.body;
 
   await Operation.update(
     {
       concept,
-      amount,
+      value,
       date,
     },
     { where: { id: operationId } }
