@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
-import axios from "axios";
-import { getFullResume, postNewResume } from "./helpers/axiosHelper";
+
+import {
+  getFullResume,
+  postNewResume,
+  editResume,
+} from "./helpers/axiosHelper";
 
 //COMPONENTS
 
@@ -34,7 +38,7 @@ function App() {
       .catch((error) => console.log(error));
   }, []);
 
-  const sumitEditForm = (
+  const submitEditForm = (
     event,
     obj,
     isIncomeValue = obj.isIncome,
@@ -50,12 +54,27 @@ function App() {
       return obj.id === element.id;
     });
     const newResumeELement = { ...newResumeList[resumeElementIndex] };
-
+    delete newResumeELement.edit;
     newResumeELement.value = parseInt(inputValue);
     newResumeELement.isIncome = isIncomeValue;
-    newResumeELement.edit = false;
     newResumeELement.concept = inputConcept;
     newResumeELement.date = dateValue;
+    editResume(newResumeELement, newResumeELement.id)
+      .then((response) => {
+        if (response.data.ok) {
+          newResumeELement.edit = false;
+          newResumeList.push(newResumeELement);
+          console.log(newResumeList);
+          console.log(newResumeELement);
+
+          setResumeList(newResumeList);
+        } else {
+          alert("This listing was not updated due to an issue in the Back End");
+        }
+      })
+      .catch((error) => console.log(error));
+
+    newResumeELement.edit = false;
 
     newResumeList[resumeElementIndex] = newResumeELement;
     setResumeList(newResumeList);
@@ -178,7 +197,7 @@ function App() {
                 return alert("you need to put a number");
               }
 
-              return sumitEditForm(event, eachObj, isIncome, dateValue);
+              return submitEditForm(event, eachObj, isIncome, dateValue);
             }}
             obj={eachObj}></EditForm>
         </li>
