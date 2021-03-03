@@ -1,7 +1,5 @@
 import Header from "../containers/Header/Header";
 import AddForm from "../containers/Form/Form";
-import ResumeTable from "../containers/ResumeTable/ResumeTable";
-import H1 from "../components/H1/H1";
 
 const AddPage = ({ sumitHandler }) => {
   let isIncome;
