@@ -158,8 +158,7 @@ function App() {
     event.target.closest("main").querySelector("nav").firstElementChild.click();
   };
 
-  const creatingJsxResumeList = (list) => {
-    let newList = list.length < 11 ? list : list.slice(list.length - 10);
+  const creatingJsxResumeList = (newList) => {
     return newList.map((eachObj) => {
       let isIncome;
 
@@ -232,9 +231,7 @@ function App() {
             render={() => (
               <ResumePage
                 resumeNum={gettingResumeNum(resumeList)}
-                resumeList={creatingJsxResumeList(
-                  resumeList
-                ).reverse()}></ResumePage>
+                resumeList={creatingJsxResumeList(resumeList)}></ResumePage>
             )}
           />
         </Switch>
