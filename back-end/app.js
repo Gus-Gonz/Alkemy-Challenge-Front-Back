@@ -38,6 +38,7 @@ app.listen(process.env.PORT, function () {
     .sync()
     .then(() => {
       console.log("We´re connected to the database");
+      console.log("Running on port: " + process.env.PORT);
     })
     .catch((error) => {
       console.log("An error ocurred", error);
