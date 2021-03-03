@@ -203,7 +203,6 @@ function App() {
             render={() => <AddPage sumitHandler={sumitAddHandler}></AddPage>}
           />
           <Route
-            exact
             path="/"
             exact
             render={() => (
