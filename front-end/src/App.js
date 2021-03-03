@@ -199,8 +199,13 @@ function App() {
       <main>
         <Switch>
           <Route
+            path="/adding"
+            render={() => <AddPage sumitHandler={sumitAddHandler}></AddPage>}
+          />
+          <Route
             exact
             path="/"
+            exact
             render={() => (
               <ResumePage
                 resumeNum={gettingResumeNum(resumeList)}
@@ -208,10 +213,6 @@ function App() {
                   resumeList
                 ).reverse()}></ResumePage>
             )}
-          />
-          <Route
-            path="/adding"
-            render={() => <AddPage sumitHandler={sumitAddHandler}></AddPage>}
           />
         </Switch>
       </main>
