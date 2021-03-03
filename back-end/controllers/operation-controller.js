@@ -4,19 +4,6 @@ const Operation = require("../models/operation");
 
 const sequelize = require("../util/database");
 
-const getOperations = async (req, res, next) => {
-  const operation = await Operation.findAll({
-    attributes: ["id", "concept", "value", "date", "isIncome"],
-  });
-
-  if (!operation) {
-    throw new HttpError("Could not find any operation", 404);
-  }
-  res.json({
-    operation,
-  });
-};
-
 const getLastTenOperations = async (req, res, next) => {
   const operation = await Operation.findAll({
     attributes: ["id", "concept", "value", "date", "isIncome"],
@@ -28,20 +15,6 @@ const getLastTenOperations = async (req, res, next) => {
     throw new HttpError("Could not find any operation", 404);
   }
 
-  res.json({
-    operation,
-  });
-};
-
-const getOperationsByType = async (req, res, next) => {
-  const typeParams = req.params.type;
-  const operation = await Operation.findAll({
-    attributes: ["concept", "value", "date", "isIncome"],
-    where: { type: typeParams },
-  });
-  if (!operation) {
-    throw new HttpError("Could not find any operation", 404);
-  }
   res.json({
     operation,
   });
@@ -121,9 +94,7 @@ const deleteOperation = async (req, res, next) => {
     });
 };
 
-exports.getOperations = getOperations;
 exports.createOperation = createOperation;
 exports.updateOperation = updateOperation;
 exports.deleteOperation = deleteOperation;
-exports.getOperationsByType = getOperationsByType;
 exports.getLastTenOperations = getLastTenOperations;

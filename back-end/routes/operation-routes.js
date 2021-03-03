@@ -5,11 +5,7 @@ const operationController = require("../controllers/operation-controller");
 
 const router = express.Router();
 
-router.get("/", operationController.getOperations);
-
-router.get("/last-ten", operationController.getLastTenOperations);
-
-router.get("/type/:type", operationController.getOperationsByType);
+router.get("/", operationController.getLastTenOperations);
 
 router.post("/", operationController.createOperation);
 
