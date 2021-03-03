@@ -1,50 +1,50 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import './App.css';
+import "./App.css";
 
 //COMPONENTS
 
-import ItemResume from './components/ItemResume/ItemResume';
-import Button from './components/Button/Button';
-import EditForm from './containers/Form/Form';
+import ItemResume from "./components/ItemResume/ItemResume";
+import Button from "./components/Button/Button";
+import EditForm from "./containers/Form/Form";
 
 //PAGES
 
-import ResumePage from './pages/ResumePage';
-import AddPage from './pages/AddPage';
+import ResumePage from "./pages/ResumePage";
+import AddPage from "./pages/AddPage";
 
 function App() {
   const [resumeList, setResumeList] = useState([
     {
       id: 1,
       value: 9999,
-      date: '2020-03-17',
-      concept: 'New Phone',
+      date: "2020-03-17",
+      concept: "New Phone",
       isIncome: false,
       edit: false,
     },
     {
       id: 2,
       value: 1000,
-      date: '2020-02-14',
-      concept: 'Won the lotery',
+      date: "2020-02-14",
+      concept: "Won the lotery",
       isIncome: true,
       edit: false,
     },
     {
       id: 3,
       value: 1000,
-      date: '2020-04-21',
-      concept: 'Sold my old phone',
+      date: "2020-04-21",
+      concept: "Sold my old phone",
       isIncome: true,
       edit: false,
     },
     {
       id: 4,
       value: 1000,
-      date: '2020-05-31',
-      concept: 'Worked as Uber',
+      date: "2020-05-31",
+      concept: "Worked as Uber",
       isIncome: true,
       edit: false,
     },
@@ -58,9 +58,9 @@ function App() {
   ) => {
     const newResumeList = [...resumeList];
 
-    const inputValue = event.target.closest('form').querySelector('#number')
+    const inputValue = event.target.closest("form").querySelector("#number")
       .value;
-    const inputConcept = event.target.closest('form').querySelector('#concept')
+    const inputConcept = event.target.closest("form").querySelector("#concept")
       .value;
     const resumeElementIndex = newResumeList.findIndex((element) => {
       return obj.id === element.id;
@@ -111,8 +111,8 @@ function App() {
   const sumitAddHandler = (event, isIncomeValue, dateValue, conceptValue) => {
     const inputValue = parseInt(
       event.target.parentElement
-        .closest('form')
-        .querySelector('#number')
+        .closest("form")
+        .querySelector("#number")
         .value.trim()
     );
     const newResumeList = [...resumeList];
@@ -131,8 +131,7 @@ function App() {
     newResumeList.push(newResumeELement);
     setResumeList(newResumeList);
 
-    // event.target.parentElement.closest().querySelector('input').value = '';
-    event.target.closest('main').querySelector('nav').firstElementChild.click();
+    event.target.closest("main").querySelector("nav").firstElementChild.click();
   };
 
   const creatingJsxResumeList = (list) => {
@@ -141,7 +140,7 @@ function App() {
       let isIncome;
 
       const radioButtonHandler = (event) => {
-        if (event.target.value === 'Income') {
+        if (event.target.value === "Income") {
           return (isIncome = true);
         } else {
           return (isIncome = false);
@@ -149,42 +148,42 @@ function App() {
       };
 
       return !eachObj.edit ? (
-        <li key={eachObj.id} className='resume-element'>
+        <li key={eachObj.id} className="resume-element">
           <ItemResume
-            className='info-resume-element'
-            style={eachObj.isIncome ? { color: 'green' } : { color: 'red' }}
-            labelConcept='Concept:'
+            className="info-resume-element"
+            style={eachObj.isIncome ? { color: "green" } : { color: "red" }}
+            labelConcept="Concept:"
             amount={eachObj.value}
             concept={eachObj.concept}
             date={eachObj.date}></ItemResume>
-          <div className='button-wrapper'>
+          <div className="button-wrapper">
             <Button
-              className='edit-task-button base-button'
+              className="edit-task-button base-button"
               click={(event) => {
                 editHandler(event, eachObj);
               }}
-              text='Edit'></Button>
+              text="Edit"></Button>
             <Button
-              className='delete-task-button base-button'
+              className="delete-task-button base-button"
               click={() => {
                 deleteHandler(eachObj.id);
               }}
-              text='Delete'></Button>
+              text="Delete"></Button>
           </div>
         </li>
       ) : (
-        <li key={eachObj.id} className='edit-element'>
+        <li key={eachObj.id} className="edit-element">
           <EditForm
             change={(event) => radioButtonHandler(event)}
             click={(event) => {
-              const value = event.target.closest('form').querySelector('#date')
+              const value = event.target.closest("form").querySelector("#date")
                 .value;
-              let dateValue = value === '' ? eachObj.date : value;
+              let dateValue = value === "" ? eachObj.date : value;
               if (
-                event.target.closest('form').querySelector('#number').value ===
-                ''
+                event.target.closest("form").querySelector("#number").value ===
+                ""
               ) {
-                return alert('you need to put a number');
+                return alert("you need to put a number");
               }
 
               return sumitEditForm(event, eachObj, isIncome, dateValue);
@@ -201,7 +200,7 @@ function App() {
         <Switch>
           <Route
             exact
-            path='/'
+            path="/"
             render={() => (
               <ResumePage
                 resumeNum={gettingResumeNum(resumeList)}
@@ -211,7 +210,7 @@ function App() {
             )}
           />
           <Route
-            path='/adding'
+            path="/adding"
             render={() => <AddPage sumitHandler={sumitAddHandler}></AddPage>}
           />
         </Switch>
