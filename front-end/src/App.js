@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
+import axios from "axios";
+import { getFullResume, postNewResume } from "./helpers/axiosHelper";
 
 //COMPONENTS
 
@@ -15,40 +17,22 @@ import ResumePage from "./pages/ResumePage";
 import AddPage from "./pages/AddPage";
 
 function App() {
-  const [resumeList, setResumeList] = useState([
-    {
-      id: 1,
-      value: 9999,
-      date: "2020-03-17",
-      concept: "New Phone",
-      isIncome: false,
-      edit: false,
-    },
-    {
-      id: 2,
-      value: 1000,
-      date: "2020-02-14",
-      concept: "Won the lotery",
-      isIncome: true,
-      edit: false,
-    },
-    {
-      id: 3,
-      value: 1000,
-      date: "2020-04-21",
-      concept: "Sold my old phone",
-      isIncome: true,
-      edit: false,
-    },
-    {
-      id: 4,
-      value: 1000,
-      date: "2020-05-31",
-      concept: "Worked as Uber",
-      isIncome: true,
-      edit: false,
-    },
-  ]);
+  const [resumeList, setResumeList] = useState([]);
+
+  useEffect(() => {
+    getFullResume()
+      .then((response) => {
+        console.log(response.data.operation);
+        const mapResponse = response.data.operation.map((eachObj) => {
+          return {
+            ...eachObj,
+            edit: false,
+          };
+        });
+        setResumeList(mapResponse);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const sumitEditForm = (
     event,
@@ -117,19 +101,27 @@ function App() {
     );
     const newResumeList = [...resumeList];
 
+    console.log(newResumeList);
+
     const newResumeELement = {
-      id: newResumeList[newResumeList.length - 1]
-        ? newResumeList[newResumeList.length - 1].id + 1
-        : 1,
       value: inputValue,
       date: dateValue,
       concept: conceptValue,
       isIncome: isIncomeValue,
-      edit: false,
     };
 
-    newResumeList.push(newResumeELement);
-    setResumeList(newResumeList);
+    postNewResume(newResumeELement)
+      .then((response) => {
+        if (response.data.ok) {
+          newResumeELement.id = response.data.createdOperation.id;
+          newResumeELement.edit = false;
+          newResumeList.push(newResumeELement);
+          setResumeList(newResumeList);
+        } else {
+          alert("This listing was not created due to an issue in the Back End");
+        }
+      })
+      .catch((error) => console.log(error));
 
     event.target.closest("main").querySelector("nav").firstElementChild.click();
   };
