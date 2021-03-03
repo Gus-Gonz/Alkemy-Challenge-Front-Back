@@ -12,4 +12,8 @@ const editResume = (data, id) => {
   return axios.put("http://localhost:5000/api/operation/" + id, data);
 };
 
-export { getFullResume, postNewResume, editResume };
+const deleteResume = (id) => {
+  return axios.delete("http://localhost:5000/api/operation/" + id);
+};
+
+export { getFullResume, postNewResume, editResume, deleteResume };

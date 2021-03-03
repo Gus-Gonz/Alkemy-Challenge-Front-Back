@@ -3,10 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
 
+//AXIOS
+
 import {
   getFullResume,
   postNewResume,
   editResume,
+  deleteResume,
 } from "./helpers/axiosHelper";
 
 //COMPONENTS
@@ -97,8 +100,18 @@ function App() {
   };
 
   const deleteHandler = (objId) => {
-    const newResumeList = resumeList.filter((element) => element.id !== objId);
-    setResumeList(newResumeList);
+    deleteResume(objId)
+      .then((response) => {
+        if (response.data.ok) {
+          const newResumeList = resumeList.filter(
+            (element) => element.id !== objId
+          );
+          setResumeList(newResumeList);
+        } else {
+          alert("This listing was not deleted due to an issue in the Back End");
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const gettingResumeNum = (list) => {
