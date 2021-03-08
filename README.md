@@ -4,7 +4,7 @@ Node.Js React.Js
 # Instalación del package.json antes de comenzar
 
 Para iniciar nuestro server, primero instalamos las dependencias desde la carpeta back-end con npm install, luego instalamos las dependencias del front-end que se
-encuentran en la carpeta back-end/front-end también con el comando npm install
+encuentran en la carpeta front-end también con el comando npm install
 
 # Asegurarse de tener instalado MySql en la máquina para poder trabajar con la base de datos  
 
